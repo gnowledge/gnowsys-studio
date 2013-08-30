@@ -41,14 +41,17 @@ urlpatterns = patterns('gstudio.views.ajaxviews',
                        url(r'^releaseBlockResponseOfTwist/$', 'ajaxReleaseBlockResponseOfTwist', name='ajax_ReleaseBlockResponseOfTwist'),
                        url(r'^ajaxResponseReciev/$', 'ajaxResponseReciev', name='ajax_ajaxResponseReciev'),
                        url(r'^rateIt/$','ajaxRateIt',name='ajax_RateIt'),
+
                    #    url(r'^loadGbobjectsHome/$', 'ajaxloadGbobjectsHome', name='ajax_loadGbobjectsHome'),
                        # url(r'^getCollections/$', 'ajaxgetCollections', name='ajax_getCollections'),
                        # url(r'^getConceptPageText/$', 'ajaxgetConceptPageText', name='ajax_getConceptPageText'),
-                       # url(r'^getConceptPageResources/$', 'ajaxgetConceptPageResources', name='ajax_getConceptPageResources'),
                        # url(r'^getConceptPageComments/$', 'ajaxgetConceptPageComments', name='ajax_getConceptPageComments'),
-                       # url(r'^getConceptPageGraphText/$', 'ajaxgetConceptPageGraphText', name='ajax_getConceptPageGraphText'),
                        # url(r'^deletedoccolln/$','Deldoccolln',name='ajax_deldoccolln'),
                        # url(r'^deleteimgcolln/$','Delimgcolln',name='ajax_delimgcolln'),
 
+
+
+		       url(r'^getConceptPageResources/$', 'ajaxgetConceptPageResources', name='ajax_getConceptPageResources'),
+		       url(r'^getConceptPageGraphText/$', 'ajaxgetConceptPageGraphText', name='ajax_getConceptPageGraphText')
 
     )

@@ -1,27 +1,13 @@
 {% load gstudio_tags %}
 
 
- <script type="text/javascript" >
+<script type="text/javascript" >
 var availableTags = [];
 var arr=[];
 var arr1=[];
 $.merge(availableTags, {% get_add_tag %})
 var pagedrawer = [];
-$.merge(pagedrawer, {% get_page_drawer %})
-var length = pagedrawer.length;
-      $(window).load(function() {
-      $("#graphcss").hide();
-      $("#content").css({"width": "800px",}); 	
-   //$("#graphcss").css({"margin-left": "450px",});
-});
-   //$("#graphcss").css({
-   // "margin-left": "-300px",
-    //"margin-right": "-200px",
-    //"margin-top": "-100px",});
-//	});
-
- $(".savepagecontent").hide();
- $(".pagedit").hide();
+$.merge(pagedrawer, {% get_page_drawer %}) 
 $(window).load(function() {
  
  $(".savepagecontent").hide();
@@ -36,8 +22,6 @@ $(window).load(function() {
  $(".pagedit").hide()
 $(".savesubsec1").hide();
  $(".submitsubsec1").hide();
-      $("#content").css({
-      "width": "600px",});
 
   });
 </script>
