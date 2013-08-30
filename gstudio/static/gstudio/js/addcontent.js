@@ -111,7 +111,7 @@ function moveDown() {
           editSection=true;
 	 // $(".saveseccontent").show();
 	   $("#content img").css({"max-width":"600px",})
-	   $("#content").css({"width":"600px",})
+	   //$("#content").css({"width":"600px",})
 	  $("#chart").hide();
 	  document.getElementById('gnoweditor').style.visibility="visible";
 	  $("#gnoweditor").orgitdown(mySettings);
@@ -152,7 +152,7 @@ function moveDown() {
 	   $("#chart").hide();
 	   $("#content img").css({"max-width":"600px",})
 	   
-	   $("#content").css({"width":"600px",})
+	   //$("#content").css({"width":"600px",})
 	   document.getElementById('gnoweditor').style.visibility="visible";
 	   $("#gnoweditor").orgitdown(mySettings);
 	   var org_data=$("#subsec"+each_id).val();
@@ -184,7 +184,7 @@ function moveDown() {
       	  //  $(".savepagecontent").show();
  	    $("#content img").css({"max-width":"600px",})
 	   
-	    $("#content").css({"width":"600px",})
+	    //$("#content").css({"width":"600px",})
 	    document.getElementById('gnoweditor').style.visibility="visible";
 	    $("#gnoweditor").orgitdown(mySettings);
             var a = this.name;
@@ -295,7 +295,7 @@ function moveDown() {
       	    $("#chart").hide();
 	    $("#content img").css({"max-width":"600px",})
 	   
-	    $("#content").css({"width":"600px",})
+	    //$("#content").css({"width":"600px",})
 	    document.getElementById('gnoweditor').style.visibility="visible";
 	    $("#gnoweditor").orgitdown(mySettings);
             var a = this.name;
@@ -326,7 +326,7 @@ function moveDown() {
 	           $(".createsubsection").hide();
 
 	           $("#content img").css({"max-width":"600px",})
-	           $("#content").css({"width":"600px",})   
+	           //$("#content").css({"width":"600px",})   
 		    $("#chart").hide();
 		    document.getElementById('gnoweditor').style.visibility="visible";
 		    $("#gnoweditor").orgitdown(mySettings);

@@ -32,7 +32,12 @@ def pagedashboard(request,pageid):
    page_ob = System.objects.get(id=pageid)
    test=""
    test=get_gbobjects(page_ob.id)
-   test1=get_pdrawer()	
+   test1=get_pdrawer()
+   Topic=""
+   attob=''
+   boolean1 = False
+   flag= False
+
    
    if request.method == "POST" :
       boolean = False
@@ -48,6 +53,23 @@ def pagedashboard(request,pageid):
       addtags = request.POST.get("addtags","")
       texttags = unicode(request.POST.get("texttags",""))
       editable = request.POST.get("edit","")
+      
+      #Discus section started
+      rating = request.POST.get("star1","")
+      flag1=request.POST.get("release","")
+      block = request.POST.get("block","")
+      topic_del = request.POST.get("del_topic", "")
+      if flag1:
+         boolean1 = True
+         make_att_true(meeting_ob)
+      if block :
+         make_att_false(meeting_ob)
+      if rating :
+         rate_it(int(id_no1),request,int(rating))
+      if topic_del:
+         del_topic(int(id_no))
+      #Close discus  
+      
       if editable=="edited":
           if id_no:
              edit_section(id_no,rep,usr)
@@ -76,7 +98,7 @@ def pagedashboard(request,pageid):
    pageid = int(pageid)
    if request.user.id == page_ob.authors.all()[0].id :
       flag = True 
-   Section = page_ob.system_set.all()[0].gbobject_set.all()
+   #Section = page_ob.system_set.all()[0].gbobject_set.all()
    admin_id = page_ob.authors.all()[0].id #a list of topics
    admin_m = page_ob.authors.all()[0]
    
@@ -94,7 +116,12 @@ def pagedashboard(request,pageid):
       collection=True
    if (page_ob.status == 1):
       status=True
-   variables = RequestContext(request, {'ot' : ot,'section' : Section,'page_ob' : page_ob,'object':page_ob,'admin_m':admin_m,"flag" : flag,"admin_id" : admin_id,'post':post,'test':test, 'test1':test1,'collection':collection,'status':status,"is_staff":is_staff})
+   #if section for retrive Topic of Discus
+   if page_ob:
+        if page_ob.system_set.all():
+                 Topic = page_ob.system_set.all()[0].gbobject_set.all()
+   
+   variables = RequestContext(request, {'ot' : ot,'page_ob' : page_ob,'object':page_ob,'admin_m':admin_m,"flag" : flag,"admin_id" : admin_id,'post':post,'test':test, 'test1':test1,'collection':collection,'status':status, 'topic':Topic, "is_staff":is_staff})
    template= "metadashboard/download.html"
    template = "metadashboard/pgedashboard.html"
    return render_to_response(template, variables)

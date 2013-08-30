@@ -131,9 +131,9 @@ function topicsaveclick(objid){
 	    var a=$(this).attr("id");
 	    not_obj=a
 	    $("#chart").hide();
-	    $("#content img").css({"max-width": "600px",})
+	    //$("#content img").css({"max-width": "600px",})
 
-	    $("#content").css({"width": "600px",})
+	    //$("#content").css({"width": "600px",})
 	
 	    document.getElementById('gnoweditor').style.visibility="visible";
 

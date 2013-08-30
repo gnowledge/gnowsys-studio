@@ -994,3 +994,98 @@ def sendMail_NonMember(senderuser,receiveremail,activity,conjuction,nid,url=None
     render = render_to_string("/gstudio/notification/emailBody.html",{'sender':senderuser,'activity':activity,'conjunction':conjuction,'object':sys.title,'url':url,'site':site.domain}) 
     send_mail("Invitation", render, senderuser.email, [receiveremail,])
     return 
+
+check = []
+def get_nbh_of_nbh(nid):
+    global check
+    data = {}
+    data['node']=[]
+    data['subnode']=[]
+    nidobject = NID.objects.get(id=nid)
+    nidobject = nidobject.ref
+    data['title']=nidobject.title
+    check.append(nid)
+    for each in nidobject.prior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data['node'].append(data1)
+            check.append(each.id)
+    for each in nidobject.posterior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data['node'].append(data1)
+            check.append(each.id)
+    r_right = Relation.objects.filter(right_subject=nid)
+    l_left = Relation.objects.filter(left_subject=nid)
+    for each in r_right:
+        each1 =  each.left_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data['node'].append(data1)
+            check.append(each1.id)
+    for each in l_left:
+        each1 =  each.right_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data['node'].append(data1)
+            check.append(each1.id)
+    for each in data['node']:
+        data['subnode'].extend(get_subjson(each['id']))
+    check = []
+    return(data)
+
+def get_subjson(nid):
+    global check
+    data = []
+    nidobject = NID.objects.get(id=nid)
+    nidobject = nidobject.ref
+    for each in nidobject.prior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data.append(data1)
+            check.append(each.id)
+    for each in nidobject.posterior_nodes.all():
+        if not each.id in check:
+            data1 = {}
+            data1['id'] = each.id
+            data1['title'] = each.title
+            data1['url'] = each.get_view_object_url
+            data.append(data1)
+            check.append(each.id)
+    r_right = Relation.objects.filter(right_subject=nid)
+    l_left = Relation.objects.filter(left_subject=nid)
+    for each in r_right:
+        each1 =  each.left_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data.append(data1)
+            check.append(each1.id)
+    for each in l_left:
+        each1 =  each.right_subject.ref
+        if not each1.id in check:
+            data1 = {}
+            data1['id'] = each1.id
+            data1['title'] = each1.title
+            data1['url'] = each1.get_view_object_url
+            data.append(data1)
+            check.append(each1.id)
+
+    return(data)

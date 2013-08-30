@@ -40,5 +40,7 @@ urlpatterns = patterns('gstudio.views.ajaxviews',
                        url(r'^sendInvitation/$', 'ajaxSendInvitation', name='ajax_SendInvitation'),
                        url(r'^releaseBlockResponseOfTwist/$', 'ajaxReleaseBlockResponseOfTwist', name='ajax_ReleaseBlockResponseOfTwist'),
                        url(r'^ajaxResponseReciev/$', 'ajaxResponseReciev', name='ajax_ajaxResponseReciev'),
-                       url(r'^rateIt/$','ajaxRateIt',name='ajax_RateIt')
+                       url(r'^rateIt/$','ajaxRateIt',name='ajax_RateIt'),
+		       url(r'^getConceptPageResources/$', 'ajaxgetConceptPageResources', name='ajax_getConceptPageResources'),
+		       url(r'^getConceptPageGraphText/$', 'ajaxgetConceptPageGraphText', name='ajax_getConceptPageGraphText')
     )

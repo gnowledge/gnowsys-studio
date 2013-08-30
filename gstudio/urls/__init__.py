@@ -42,7 +42,8 @@ urlpatterns = patterns(
     url(r'^', include('gstudio.urls.quick_nodetype')),
     url(r'^', include('gstudio.urls.capabilities')),
     url(r'^', include('gstudio.urls.nodetypes')),
-    url(r'topicadd1/', include('gstudio.urls.topicadd1')), 
+    url(r'topicadd1/', include('gstudio.urls.topicadd1')),
+    url(r'topicAddtoWiki/', include('gstudio.urls.topicAddtoWiki')), 
     url(r'sectionadd1/', include('gstudio.urls.sectionadd1')),
     url(r'^login', include('gstudio.urls.login')),
     url(r'user/$','gstudio.views.user.userdashboard'),#/(\w+)

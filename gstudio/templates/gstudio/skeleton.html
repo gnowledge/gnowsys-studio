@@ -42,17 +42,17 @@
 				background-color: white;
 			}
 			#chart {
-				height: 90%;
-				margin: 0 auto;
+				height: 600px;
+				/*margin: 0 auto;
 				width: 90%;
-				display: block;
+				display: block;*/
 			}
-			svg {
+			/*svg {
 				margin-left: 0%;
 				margin-right: 10%;
 				display: block;
 				position: absolute;
-			}
+			}*/
 
 
 
@@ -413,10 +413,10 @@
 					</div>
 				
                          {% block sidebargraph %}
-			<div id="graphcss">
+			<!--<div id="graphcss">
 				<div id="chart">
 					
-				</div>
+				</div>!-->
 				<script type="text/javascript" src="/static/gstudio/js/jquery.min.js" ></script>
 				<script type="text/javascript" src="/static/gstudio/js/jquery-ui.js" ></script>
 				<script type="text/javascript" src="/static/gstudio/js/underscore.js" ></script>
@@ -468,7 +468,7 @@ $.getJSON('/nodetypes/graphs/graph_json/' + {{object.id}}, function (json1) {
 										init(metadata,relations);
 										load({{object.id}}) });
 
-
+}
 function load(key)
 {
   
@@ -479,11 +479,16 @@ function load(key)
 			var h = 650;
    			var q = 3 * s + 75 + "%";
 			}else{*/
-			var w = 1000;
+			/*var w = 1000;
 	   		var p = 140 + "%";
 			var h = 650;
-   			var q = 110 + "%";			
+   			var q = 110 + "%";*/			
 			//}
+		var w = 1050;
+		var p = 105 + "%";
+  		var h = 550;
+  		var q = 110 + "%";
+
         fill = d3.scale.category20();
  
   var vis = d3.select("#chart")
@@ -926,23 +931,20 @@ function check_Relationtype(metadata,relations)
 						 }); 
 return relations;
 
-
 }
 
-
-}
 $(fgraph());
 
 </script>
 
-				</div>
+				<!--</div>-->
 	
                                 {% endblock %}
                                   <div id="sidebardetails">
                                    {% block sidebardetails %} 
                                   {% endblock %}
                                   </div> 
-				
+	</body>				
 
 				<div id="footer" align="center">
 				<p>
@@ -965,5 +967,5 @@ $(fgraph());
 				</div>
 		
 	
-	</body>
+
 </html>
