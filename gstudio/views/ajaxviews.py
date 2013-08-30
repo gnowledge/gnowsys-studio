@@ -848,6 +848,56 @@ def Status(request):
     sys.save()
     return HttpResponse("sucess")
 
+#ajax views for getting graph text in Releted topic       
+def ajaxgetConceptPageGraphText(request):
+    nidObject=""
+    objectid= ""
+    resultDict = {}
+    nidObjectSystem = ""
+    collection=False
+    if request.is_ajax() and request.method =="POST":
+        objectid=request.POST['objectid']
+        nidObject = NID.objects.filter(id=objectid)
+    else :
+	return HttpResponse("failed")	
+    if nidObject:
+	nbhdata=get_nbh_of_nbh(objectid)
+    else :
+        return HttpResponse("failed")
+    variables = RequestContext(request, {'nbhdata':nbhdata})
+    template = "metadashboard/graphText.html"
+    return render_to_response(template,variables)
+
+#ajax Resources in tab view
+def ajaxgetConceptPageResources(request):
+    nidObject=""
+    objectid= ""
+    resultDict = {}
+    nidObjectSystem = ""
+    collection=False
+    if request.is_ajax() and request.method =="POST":
+        objectid=request.POST['objectid']
+        nidObject = NID.objects.filter(id=objectid)
+    else :
+	return HttpResponse("failed")	
+    if nidObject:
+	nidObjectGet = NID.objects.get(id=objectid)
+	nidObjectSystem = nidObjectGet.ref.system
+	collsys=nidObjectSystem.systemtypes.all()
+        iscoll=collsys.filter(title="Collection")
+        if iscoll:
+            collection=True
+	Section = nidObjectSystem.system_set.all()[0].gbobject_set.all()
+	ot=nidObjectSystem.gbobject
+	test1=get_pdrawer()
+
+    else :
+        return HttpResponse("failed")
+    variables = RequestContext(request, {"page_ob":nidObjectSystem,"collection":collection,'ot' : ot,'section' : Section,'object':nidObjectSystem,'test1':test1})
+    template = "metadashboard/wikiResources.html"
+    return render_to_response(template,variables)
+
+
             
 
 
