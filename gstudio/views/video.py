@@ -17,6 +17,7 @@
 import time;
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
+from django.http import Http404
 import ox
 import os
 from gstudio.models import *
@@ -29,6 +30,10 @@ from gstudio.methods import *
 from django.contrib.auth import authenticate
 from django.template.defaultfilters import slugify
 import hashlib
+from tagging.models import Tag, TaggedItem
+from django.http import Http404
+import json
+
 report = "true"
 global md5_checksum
 md5_checksum = ""
@@ -509,7 +514,17 @@ def show(request,videoid):
 		if contenttext !="":
 			 edit_description(vidid,contenttext,str(request.user))	
 
-	gbobject = Gbobject.objects.get(id=videoid)
+	gbobject = Gbobject.objects.filter(id=videoid)
+        if gbobject:
+            gbobject = Gbobject.objects.get(id=videoid)
+	    if "Video" in [each.title for each in gbobject.objecttypes.all()]:
+		pass
+            else:
+    	        raise Http404
+
+        else:
+ 	    raise Http404
+
 	relation = ""
 	if gbobject.get_relations():
 		if gbobject.get_relations()['is_favourite_of']:
@@ -574,3 +589,28 @@ def wetube(request):
         vars=RequestContext({})
         template="gstudio/wetube.html"
         return render_to_response(template,vars)
+
+def getCollectionItems(request):
+	'''
+	By taking tagname, fetching Tag's items from wetube and return gobject's id,title,slug corresponding to Tag's items 
+	'''
+	tagId = []
+	resultTag = []
+	videoObject = ""
+	if request.is_ajax() and request.method =="POST":
+		tagName=request.POST['tagName']
+		api=ox.api.API("http://wetube.gnowledge.org/api")
+		countTagitems = api.find({"query":{"operator":"&","conditions":[{"key":"keywords","value":tagName,"operator":"=="}]}})
+		totalTagNo=countTagitems['data']['items']
+		Tagitems = api.find({"keys":["id","title"],"query":{"operator":"&","conditions":[{"key":"keywords","value":tagName,"operator":"=="}]},"range":[0,totalTagNo],"sort":[{"operator":"+","key":"title"}]})
+
+		for each in Tagitems['data']['items']:
+			tagId.append(each['id'])
+		for each in tagId:
+			videoObject = NID.objects.filter(slug=each)
+			if videoObject:
+				nidObject = NID.objects.get(slug=each)
+				resultTag.append({'id':nidObject.id,"slug":each,"title":nidObject.title})
+					
+	return HttpResponse(json.dumps(resultTag))             
+

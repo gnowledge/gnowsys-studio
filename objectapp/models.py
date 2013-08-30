@@ -414,26 +414,29 @@ class Gbobject(Node):
            
             if relation.relationtype.title not in rel_dict['left-subjecttypes'].keys():
                 # create a new list field and add to it
-                rel_dict['left-subjecttypes'][str(relation.relationtype.title)] = {}
+                rel_dict['left-subjecttypes'][str(relation.relationtype.title)] = []
             # add
             obj=Gbobject.objects.get(id=relation.right_subject_id)
-            relc[obj.title]=obj.get_view_object_url
+            relc['title']=obj.title
+            relc['id']=relation.id
+            relc['url']=obj.get_view_object_url
             if not obj.title in rel_dict['left-subjecttypes'][str(relation.relationtype.title)]:
-                rel_dict['left-subjecttypes'][str(relation.relationtype.title)].update(relc) 
+                rel_dict['left-subjecttypes'][str(relation.relationtype.title)].append(relc)
+          
         
         for relation in right_relset:
             reld={}
             # check if relation exists
             if relation.relationtype.inverse not in rel_dict['right_subjecttypes'].keys():
                 # create a new list key field and add to it
-                rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)] = {}
+                rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)] = []
                 # add to the existing key
             obj=Gbobject.objects.get(id=relation.left_subject_id)
-            reld[obj.title]=obj.get_view_object_url
+            reld['title']=obj.title
+            reld['id']=relation.id
+            reld['url']=obj.get_view_object_url
             if not obj.title in rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)]:
-                 rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)].update(reld)
-
-          
+                 rel_dict['right_subjecttypes'][str(relation.relationtype.inverse)].append(reld)
            
 #        print "reldict-=",rel_dict
         relation_set.update(rel_dict['left-subjecttypes'])
@@ -860,7 +863,7 @@ class Gbobject(Node):
         while obtags:
             part=obtags.partition(",")
             if part[0]:
-               if str(part[0])!=" ":
+               if part[0]!=" ":
                    obls.append(part[0])
             obtags=part[2]
         nbh['Tags']=obls

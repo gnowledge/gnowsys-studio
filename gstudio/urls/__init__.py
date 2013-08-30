@@ -26,6 +26,7 @@ from gstudio.forms import RecaptchaRegistrationForm
 
 urlpatterns = patterns(
     '',
+    url(r'^templatetags/getsrc_addreln','gstudio.views.ajaxviews.getobjs'),
     url(r'^tags/', include('gstudio.urls.tags',)),
     url(r'^feeds/', include('gstudio.urls.feeds')),
     url(r'^authors/', include('gstudio.urls.authors')),
@@ -53,8 +54,10 @@ urlpatterns = patterns(
     url(r'page/',include('gstudio.urls.page')),
     url(r'^resources/addreln/',include('gstudio.urls.addreln')),
     url(r'^resources/images/',include('gstudio.urls.image')), 
+    url(r'^resources/imagecollection/',include('gstudio.urls.image')),
     url(r'^resources/videos/',include('gstudio.urls.video')), 
-    url(r'^resources/documents',include('gstudio.urls.docu')),
+    url(r'^resources/documents/',include('gstudio.urls.docu')),
+    url(r'^resources/docu/',include('gstudio.urls.docu')),
     url(r'^resources/loom/',include('gstudio.urls.loom')),
     url(r'^userpreference/',include('gstudio.urls.userpreference')),
 

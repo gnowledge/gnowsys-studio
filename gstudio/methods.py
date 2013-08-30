@@ -325,6 +325,7 @@ def make_rep_object(replytext,auth_id,usr):
  data1 = data.readlines()
  # remove header content information
  data2 = data1[107:]
+ 
  dataa = data2[data2.index('<div id="content">\n')]='<div id=" "\n'
  data3 = data2[:-6]
 

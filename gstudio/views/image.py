@@ -30,12 +30,58 @@ import hashlib
 from django.template.defaultfilters import slugify
 from django.template.loader import get_template
 from django.template import Context
+from django.http import Http404
 
 
 size = 128, 128
 report = "true"
 md5_checksum = ""
 
+def imagecollection(request,imgid):
+    image=System.objects.get(id=imgid)
+    imgcolln=get_gbobjects(imgid)
+    return render_to_response("gstudio/imagecollection.html",RequestContext(request,{'imgcolln':imgcolln,'image':image}))
+
+def createcolln(request):
+    listcl=request.GET["listofcollns"]
+    coltitle=request.GET["coltitle"]
+    editcoln=request.GET["editcoln"]
+    colid=request.GET["colid"]
+    if editcoln=='1':
+        col=System.objects.get(id=colid)
+        col.gbobject_set.clear()
+        i=0
+        if listcl != "null":
+            listcl=listcl+","
+            listcl=eval(listcl)
+            while i < len(listcl):
+                objs=Gbobject.objects.get(id=listcl[i])
+                col.gbobject_set.add(objs)
+                i=i+1
+        col.save()
+        p=col.gbobject_set.all()
+        print "complelst",p
+        t=get_template('gstudio/existngcollns.html')
+        html = t.render(Context({'image':col,'user':request.user}))
+        return HttpResponse(html)
+    else:
+        syscol=Systemtype.objects.get(title='Imagecollection')
+        col=System()
+        col.title=coltitle
+        col.slug=slugify(coltitle)
+        col.save()
+        col.systemtypes.add(syscol)
+        t='gstudio/imagecollns.html'
+        if listcl != "" and listcl != "null":
+            i=0
+            listcl=listcl+","
+            listcl=eval(listcl)
+            while i < len(listcl):
+                objs=Gbobject.objects.get(id=listcl[i])
+                col.gbobject_set.add(objs)
+                i=i+1
+            col.save()
+        return render_to_response(t,RequestContext(request))
 
 def refpriorpost(request):
     ret={}
@@ -409,7 +455,18 @@ def show(request,imageid):
 			new_ob.title = titlecontenttext
 			new_ob.save()
 
-	gbobject = Gbobject.objects.get(id=imageid)
+	gbobject = Gbobject.objects.filter(id=imageid)
+        if gbobject:
+            gbobject = Gbobject.objects.get(id=imageid)
+	    if "Image" in [each.title for each in gbobject.objecttypes.all()]:
+		pass
+            else:
+    	        raise Http404
+
+        else:
+ 	    raise Http404
+
+
 	relation = ""
 	if gbobject.get_relations():
 		if gbobject.get_relations()['is_favourite_of']:

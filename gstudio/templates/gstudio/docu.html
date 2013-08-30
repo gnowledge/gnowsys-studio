@@ -10,6 +10,88 @@
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/sets/org/set.js"></script>
 <script type="text/javascript" src="{{STATIC_URL}}gstudio/js/orgitdown/orgitdown/jquery.orgitdown.js"></script>
 <script type="text/javascript" >
+jQuery(document).ready(function($) {
+$(".deldoccolln").click(function(){
+        var obid = this.id;
+        r = confirm("Please confirm delete ")
+        if (r==true)
+        {
+         $("#lstBox2").empty();
+         $("#doccolname").val("");
+        $.ajax({
+        url: '/gstudio/ajax/deletedoccolln/',
+        data: {obid:obid},
+        beforeSend: function() {
+              $("#ajax_load_image").show();
+              $("#content").css({"opacity":"0.1",})
+                      },
+        success: function(data){
+                $('#docucollections').html(data);
+                     },
+        complete: function(){
+                $("#ajax_load_image").hide();
+                $("#content").css({"opacity":"",})
+                  }
+});
+}
+});
+$("#lstdocvalue").click(function(){
+        $("#coll").show();
+        $("#coll").css({"margin-top":"40px","display":""});
+        $(".addtoimgdrawer").css({"display":""});
+        $("#docucollections").css({"position":"absolute","margin-top":"-15px"})
+        $("#lowerdiv").css({"position":"relative","margin-top":"5px"})
+        var arr=[];
+        var arr1=[];
+        $("#collectionimg").hide();
+        opts = lstBox2.options, len = opts.length;
+        if (len == 0) {
+                   arr=[];
+                   arr1=[];
+
+        }
+        else{
+                   arr1=[];
+                   for (var i = 0; i < len; i++)
+                   {
+                           arr[i] = "'"+opts[i].value+"'";
+                           arr1[i]=opts[i].id;
+                   }
+         }
+         var abc1=arr1.join(',');
+         if (abc1) {
+                            var abc=abc1;
+
+         }
+         else {
+                           var abc=null;
+         }
+         var listofcollns=abc
+         var colid=""
+         coltitle=""
+         var coltitle=document.getElementById("doccolname").value;
+         alert(coltitle);
+         if (coltitle == ""){alert("Please type collection name");
+                      $("#doccolname").focus();}
+         else{
+                             $("#lstBox2").empty()
+                             $("#doccolname").val("");
+                             $.ajax({
+                              url: '/gstudio/resources/docu/createcolln/',
+                              data:{'listofcollns':abc,'coltitle':coltitle,'editcoln':0,'colid':colid},
+
+                              success: function(data) {
+                              $("#docucollections").html(data);
+                              },
+
+       });}
+
+    });
+})
+
+
+
+
   $(function(){
           $("#mydropdown").change(function(event){
             $("option:selected", $(this)).each(function(){
@@ -34,6 +116,10 @@ $("#graphcss").hide();
 var i = 0;
 var availableTags = [];
 $.merge(availableTags, {% get_add_tag %})
+$( "#tags{{document.id}}" ).autocomplete({
+            source: availableTags
+        });
+
 jQuery(document).ready(function($) {
       
     $("#commenteditor").click(function(){

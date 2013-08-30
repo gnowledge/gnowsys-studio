@@ -477,11 +477,12 @@ def add_res_relation(meetingob):
 
 @register.simple_tag
 def get_available_rts():
-    listrts=[]
+    listrts={}
     for each in Relationtype.objects.all():
-        s=each.title
-        listrts.append(str(s))
+        s=each.title+" - with inverse - "+each.inverse
+        listrts[str(s)]=each.id
     return str(listrts)
+
 
 @register.simple_tag
 def get_available_objects():
