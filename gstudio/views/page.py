@@ -17,6 +17,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.http import Http404
 from gstudio.models import *
 from gstudio.methods import *
    
@@ -29,7 +30,15 @@ def pagedashboard(request,pageid):
    is_staff=False
    if usr1.is_staff:
       is_staff=True
-   page_ob = System.objects.get(id=pageid)
+   page_ob = System.objects.filter(id=pageid)
+   if page_ob:
+      page_ob = System.objects.get(id=pageid)
+      if "Wikipage" in [each.title for each in page_ob.systemtypes.all()]:
+         pass 
+      else:
+         raise Http404
+   else:
+       raise Http404
    test=""
    test=get_gbobjects(page_ob.id)
    test1=get_pdrawer()	

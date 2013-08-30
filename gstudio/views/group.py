@@ -17,6 +17,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.http import Http404
 from gstudio.models import *
 from gstudio.methods import *
 from notification import models as notification
@@ -113,6 +114,15 @@ def groupover(request,sys_id, endtime):
     
 def groupdashboard(request,grpid):
    grpid = int(grpid)
+   meeting_ob = System.objects.filter(id=grpid)
+   if meeting_ob:
+      meeting_ob = System.objects.get(id=grpid)
+      if "Meeting" in [each.title for each in meeting_ob.systemtypes.all()]:
+         pass 
+      else:
+         raise Http404
+   else:
+       raise Http404
    Topic=""
    admin_id=""
    attob=""

@@ -27,7 +27,7 @@ var mySettings = {
 		{name:'Link', key:'L', openWith:'[[http://your.address.com here/][Your visible link text here]]', closeWith:'', placeHolder:'' },
 	        {separator:'---------------' },
                 {name:'Insert Embed Html', replaceWith:'\n#+BEGIN_HTML \n\n#+END_HTML\n' },
-                {name:'Insert Structural Element', replaceWith:'\n#+BEGIN_EXAMPLE\n\n#+END_EXAMPLE\n' },
+                {name:'Insert Code Snippet', replaceWith:'\n#+BEGIN_EXAMPLE \n\n#+END_EXAMPLE\n' },
                 {name:'Close',call:'close' }
 
 		//{name:'Clean', className:'clean', replaceWith:function(orgitdown) { return orgitdown.selection.replace(/<(.*?)>/g, "") } }		

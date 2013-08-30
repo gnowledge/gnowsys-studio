@@ -41,7 +41,6 @@ function saveclick(objid){
 
 jQuery(document).ready(function($) {
     $(document).on('click',".commenteditor",function(){
-
 	if(checkeditor==0){
         $(this).after('<textarea id="gnoweditor" style="visibility:hidden;width:450px;height:60px;"></textarea>');
         isSubResponse=true;
@@ -75,6 +74,7 @@ jQuery(document).ready(function($) {
          	objid=a;
                 $("#chart").hide();
                 document.getElementById('gnoweditor').value="";	
+	        document.getElementById('gnoweditor').style.visibility="visible";
                 $("#save"+a).show();
                 $(".commenteditor").hide();
 	        $(".chkdel").hide();
@@ -182,7 +182,6 @@ function topicsaveclick(objid){
 jQuery(document).ready(function($) {
         $(".editcontent").one("click",function() {
             $(this).replaceWith('<textarea id="gnoweditor" style="visibility:hidden;width:450px"></textarea>');
-
 	    editTwist=true;
 	    activity="edited_twist"
 	    var each_id = $(this).attr("id");
@@ -195,6 +194,7 @@ jQuery(document).ready(function($) {
 	    document.getElementById('gnoweditor').style.visibility="visible";
 	    $("#gnoweditor").orgitdown(mySettings);
 	    var org_data=$("#commentdata"+each_id).val();
+	    //var org_data=content_org+each_id;
 	    $("#edit"+each_id).val("edited");
 	    $("#topictext"+each_id).val(org_data);
             var screentop=$(document).scrollTop();
@@ -272,8 +272,9 @@ jQuery(document).ready(function($) {
 jQuery(document).ready(function($) {
         $("#threadedit").one("click",function() {
             $(this).replaceWith('<textarea id="gnoweditor" style="visibility:hidden;width:450px"></textarea>');
+	    $(".intimateSubscribers").show('slow');
 	    editThread=true;
-	    $(".intimateSubscribers").show('slow');	   
+	   
 	    $("#chart").hide();
             $("#content img").css({"max-width": "600px",})
 
@@ -305,7 +306,7 @@ jQuery(document).ready(function($) {
             $("#threadsave").hide();
             activity="edited_thread"
             not_obj=id
-	    $("#threadedit"+id).val("editthread");
+            $("#threadedit"+id).val("editthread");
 	    if($("input:radio[name=intimate]").is(':checked')) {
         	var radio_select = $('input:radio[name=intimate]:checked').val();
         	if(radio_select=="Yes"){
