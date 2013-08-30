@@ -480,7 +480,9 @@ $.ajax({
 	     </div>  
 	     <div class="tabcontent" id="view3">
 	       {% if not topic %}
+		 {% if user.is_authenticated %}
 	       <p>No discus page yet created Click <input type="button" id ="btnDiscus" value="here" onclick="wikiDiscus()"/> to create Discussion</p>
+		  {% endif %}	
 	       {% endif %}
 	       {% include "gstudio/wikiDiscus.html" %}
 	     </div>
