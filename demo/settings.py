@@ -22,13 +22,13 @@ direxist = os.path.isdir("/tmp/beta/")
 if not direxist:
     os.system("mkdir /tmp/beta/")
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG78 = True
-# DATABASES = {
-#     'default':
-#              {'ENGINE': 'django.db.backends.sqlite3',
-#               'NAME': os.path.join(os.path.dirname(__file__), 'demo.db')}
-#              }
+DATABASES = {
+    'default':
+             {'ENGINE': 'django.db.backends.sqlite3',
+              'NAME': os.path.join(os.path.dirname(__file__), 'demo.db')}
+             }
 STATIC_URL = '/static/'
 STATIC_ROOT = '/static'
 RECAPTCHA_PUBLIC_KEY = '6LcBr9USAAAAAJNHxpA5_2nQK9JnKQCU3kTUstEK'
