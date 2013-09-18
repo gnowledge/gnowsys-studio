@@ -30,7 +30,7 @@ def make_topic_wikiobject(title,auth_id,usr):
     exist_ob=Gbobject.objects.filter(title="Discus: " + title)	
     if not exist_ob:		
     	new_ob = Gbobject()
-    	new_ob.title = "Discus On: " + title
+    	new_ob.title = "Discussion on: " + title
     	new_ob.slug = slugify(title)	
     	new_ob.save()
     	print new_ob.id
