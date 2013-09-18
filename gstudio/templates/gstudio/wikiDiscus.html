@@ -80,7 +80,7 @@
    		{% for author in each.authors.all %} 
    			{% ifequal user.id author.id %}
 		<input class="topicchk" id="chk{{ each.id }}" name="del_topic" type="checkbox" value="delete_topic"/>
-		<input type="submit" class="topicdelete" id="delete{{ each.id }}" value="Delete Discus"></br>
+		<input type="submit" class="topicdelete" id="delete{{ each.id }}" value="Delete Discuss"></br>
 			{% endifequal %}
    		{% endfor %}
 
