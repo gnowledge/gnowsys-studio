@@ -288,7 +288,7 @@ def video(request):
 				template = "gstudio/video.html"
 				return render_to_response(template, variables)
 	api.signin({'username': sd,'password':password})
-	r= api.find({'sort': [{'key': 'title','operator': '+'}],'query': {'conditions': [{'key': 'title','value': '','operator': ''}],'operator': '&'},'keys': ['id', 'title','user','created','duration','sourcedescription'],'range': [0,500]})
+	r= api.find({'sort': [{'key': 'title','operator': '+'}],'query': {'conditions': [{'key': 'title','value': '','operator': ''}],'operator': '&'},'keys': ['id', 'title','user','created','duration','sourcedescription'],'range': [0,1500]})
 	s=r['data']['items']
 	for each in s:
 		flag=0
