@@ -68,6 +68,13 @@
 
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
     	<script src="{{STATIC_URL}}gstudio/js/gstudio.js" type="text/javascript"></script>
+<script type="text/javascript">
+         $(document).ready(function(){
+         $('ins').css({"background": "", "color": "#33CC33"});
+         $('del').css({"background": "", "color": "#FF0000"});
+         });
+         </script>
+ 
     		<!-- EXTRAHEAD -->
     		{% block extrahead %}{% endblock %}
 
@@ -102,8 +109,8 @@
 				/ {% block breadcrumbs %}{% endblock %}
 			</div>
 			<!-- <div id="body" class="span-24 last" > -->
-			  	<table border="0" >
-					<tr><td>
+			  	<table border="0" width="100%" >
+					<tr><td width="50%">
 					     
 		<h3>{% block content %}
 		  {% block nodetype-content %}
@@ -155,7 +162,10 @@
 			{% endfor %}                         
 			{% endif %}
 		   {% if ver_new_nbh_dict.content or ver_old_nbh_dict.content %}
-                     <b> Content:<nbsp></b>{{ ver_new_nbh_dict }}  <br/>
+	
+		    {% with ver_new_nbh_dict.content|safe as nbh_cont %}
+                     <b> Content:<nbsp></b>{{ nbh_cont }}  <br/>
+		       {% endwith %}
                     {% endif %}           
                             
                             
@@ -164,7 +174,7 @@
 		   {% endblock %}
 
 					    </td>
-					    <td>
+					    <td width="50%">
 					     
 		<h3>{% block content1 %}
 		  {% block nodetype-content1 %}
@@ -234,21 +244,24 @@
                                 {% endautoescape %}<br>
 		    {% endif %}
                     {% if ver_new_nbh_dict.content or ver_old_nbh_dict.content %}
-                     <b> Content:<nbsp></b>  {% autoescape off %}
-		         {{ compare_dict.content }}
-                       {% endautoescape %} <br/>
+		   
+		    {% with compare_dict.content|safe as comp_cont %}
+                     <b> Content:<nbsp></b> 
+		         {{ comp_cont }}
+                        <br/>
+			{% endwith %}
                     {% endif %}                                     
  {% endwith %}
  {% endblock %} 
  {% endblock %}
 <br>
 </td></tr>
-<tr><td>
+<tr><td width="50%">
 <form method="get" action="/objects/display/merge/{{ ssid1 }}/{{ ssid2 }}">
 <input type="submit" value="Merge {{ nt.id }}.{{ version_no1 }} with {{ nt.id }}.{{ version_no2 }}" id="merge1" name="left" ></input></td>
 <td><input type="submit" value="Merge {{ nt.id }}.{{ version_no2 }} with {{ nt.id }}.{{ version_no1 }}" id="merge2" name="right"></input></td></form>
 </tr>
-<tr><td>
+<tr><td width="50%">
 <form method="get" action="/objects/display/revert" >
 <input type="submit" value="Revert to {{ nt.id }}.{{ version_no1 }}" name="{{ ssid1 }}"></input></td>
 <td><input type="submit" value="Revert to {{ nt.id }}.{{ version_no2 }}" name="{{ ssid2 }}"></input></td>
