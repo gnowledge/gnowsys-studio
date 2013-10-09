@@ -71,28 +71,25 @@ def compare_history(request,ssid):
     version_no2=get_version_counter(version_counter2)
     counter2=float(version_counter2)
     ssid2=int(counter2)
+
     ver_obj=Version.objects.get(id=ssid1)
     ot=ver_obj.object.ref
     pp=pprint.PrettyPrinter(indent=4)
+    
     ver_new_dict=ot.version_info(ssid1)
     content = ""
-    content=ver_new_dict['content']
+    content=str(ver_new_dict['content'])
     if content:
-    	a=content.split("</h1>\n<p>")
-        b=a[1].split("</p></div>")
-        content=b[0]
-        contentnew=content
+    	content=content[3:-4]
     ver_new_dict['content']=content
 
     ver_old_dict=ot.version_info(ssid2)
     content = ""
-    content=ver_old_dict['content']
+    content=str(ver_old_dict['content'])
     if content:
-     	a=content.split("</h1>\n<p>")
-        b=a[1].split("</p></div>")
-        content=b[0]
-        contentold=content
+     	content=content[3:-4]
     ver_old_dict['content']=content
+    
     ver_new_nbh=ver_new_dict['nbhood']
     ver_new_nbh_dict=ast.literal_eval(ver_new_nbh)
     
@@ -237,10 +234,20 @@ def compare_history(request,ssid):
     diffs=diffs.replace("cript>","")
     diffs=diffs.replace("<br>","")
     diffs=diffs.replace('class="title">','')
+    #diffs=diffs.replace("e6ffe6","33CC33")
+    #diffs=diffs.replace("ffe6e6","FF0000")
     diffs=diffs.replace("background","color")
+    #diffs=diffs.replace("del","div class='del'")
+    
     compare_dict['content']=diffs
+    print compare_dict['content']
+    #print "REAL:",diffs	
+    #compare_dict['content']=diffs
     ver_new_nbh_dict['content']=ver_new_dict['content']
     ver_old_nbh_dict['content']=ver_old_dict['content']
+
+    
+
     variables=RequestContext(request,{'nt':ot,'ver_old_dict':ver_old_dict,'ver_new_dict':ver_new_dict,'compare_dict':compare_dict ,'ssid1':ssid1,'ssid2':ssid2,'version_no1':version_no1,'version_no2':version_no2,'ver_new_nbh_dict':ver_new_nbh_dict,'ver_old_nbh_dict':ver_old_nbh_dict})
     template="objectapp/version_diff.html"
     return render_to_response(template,variables)
