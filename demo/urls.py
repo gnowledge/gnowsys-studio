@@ -50,7 +50,7 @@ urlpatterns = patterns(
     url(r'^gstudio/', include('gstudio.urls')),
     url(r'^objects/', include('objectapp.urls')),
     url(r'^tagclouds/',include('gstudio.urls.tagclouds')),
-#    url(r'^comments/', include('django.contrib.comments.urls')),
+    url(r'^comments/', include('django.contrib.comments.urls')),
    ###google verification 
     url(r'^google74cffa303b94cfe6.html/',google_view), 
     url(r'^BingSiteAuth.xml/',bing_view), 
