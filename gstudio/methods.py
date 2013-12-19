@@ -198,12 +198,12 @@ def loom_status(pageid):
 #get Ratings user made
       for vote in voteofuser:
           objectofvote = vote.content_object
-          if objectofvote.objecttypes.all():
-              if objectofvote.objecttypes.all()[0].title=='Reply':
-                  print "pr",objectofvote
-                  objectofvoteid = objectofvote.getthread_of_response.id
-                  if thdid== objectofvoteid:
-                      rating_made = rating_made + 1                                                                                 
+          if objectofvote.objecttypes:
+              if objectofvote.objecttypes.all():
+                  if objectofvote.objecttypes.all()[0].title=='Reply':
+                      objectofvoteid = objectofvote.getthread_of_response.id
+                      if thdid== objectofvoteid:
+                          rating_made = rating_made + 1                                                                                 
 #      ratngsuser=get_rate_of_object_of_user(eachsubscbr,sys.id)
       userdet.append(str(rating_made))
       userdet.append(str(ratngs))                                                                                                   
