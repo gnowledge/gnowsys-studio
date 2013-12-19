@@ -64,20 +64,20 @@ def get_recur_responses_of_twist(twist):
             get_recur_responses_of_twist(each)
     return lst1
 def get_rate_of_object_of_user(user,sysid):
-#   us = User.objects.get(username="gnowgi")                                                                                                 
-#    print "insget",sysid,user
-    voteofuser = Vote.objects.filter(user = user)
-    rating_made = 0
-    #voteofuser.count()                                                                                                                      
-    for vote in voteofuser:
-        objectofvote = vote.content_object
-        if objectofvote.objecttypes.all():
-            if objectofvote.objecttypes.all()[0].title=='Reply':
-#                print "pr",objectofvote
-                objectofvoteid = objectofvote.getthread_of_response.id
-                if sysid == objectofvoteid:
-                    rating_made = rating_made + 1
-    return rating_made
+    try:
+        voteofuser = Vote.objects.filter(user = user)
+        rating_made = 0
+        for vote in voteofuser:
+            objectofvote = vote.content_object
+            if objectofvote.objecttypes.all():
+                if objectofvote.objecttypes.all()[0].title=='Reply':
+                    #                print "pr",objectofvote
+                    objectofvoteid = objectofvote.getthread_of_response.id
+                    if sysid == objectofvoteid:
+                        rating_made = rating_made + 1
+        return rating_made
+    except:
+        pass
 def posts_recd_for_subscr(subscrid,thdid):
     usr=User.objects.get(id=subscrid)
     c=0
