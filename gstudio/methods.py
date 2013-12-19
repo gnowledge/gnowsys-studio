@@ -69,12 +69,13 @@ def get_rate_of_object_of_user(user,sysid):
         rating_made = 0
         for vote in voteofuser:
             objectofvote = vote.content_object
-            if objectofvote.objecttypes:
-                if objectofvote.objecttypes.all():
-                    if objectofvote.objecttypes.all()[0].title=='Reply':
-                        objectofvoteid = objectofvote.getthread_of_response.id
-                        if sysid == objectofvoteid:
-                            rating_made = rating_made + 1
+            if objectofvote:
+                if objectofvote.objecttypes:
+                    if objectofvote.objecttypes.all():
+                        if objectofvote.objecttypes.all()[0].title=='Reply':
+                            objectofvoteid = objectofvote.getthread_of_response.id
+                            if sysid == objectofvoteid:
+                                rating_made = rating_made + 1
             
         return rating_made
     except:
@@ -198,7 +199,7 @@ def loom_status(pageid):
 #get Ratings user made
       for vote in voteofuser:
           objectofvote = vote.content_object
-          if objectofvote.objecttypes:
+          if objectofvote:
               if objectofvote.objecttypes.all():
                   if objectofvote.objecttypes.all()[0].title=='Reply':
                       objectofvoteid = objectofvote.getthread_of_response.id
