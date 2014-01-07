@@ -227,7 +227,9 @@ $('#pandoravideo').pandoravideo();
   {% endwith %}
 </div>
 {% endblock %}
-
+{% if user.is_authenticated %}
+  {% render_comment_form for video %}
+{% endif %}
 
 
 {% endblock %}

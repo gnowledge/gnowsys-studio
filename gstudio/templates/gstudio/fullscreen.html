@@ -176,7 +176,9 @@ $(document).ready(function(){
 </div>
 {% endblock %}
 
-
+{% if user.is_authenticated %}
+  {% render_comment_form for image %}
+{% endif %}
 
 
 <br>
